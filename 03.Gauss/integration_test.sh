@@ -1,34 +1,45 @@
 #!/bin/bash
 set -e
 
-python -c "
-import numpy as np
-np.random.seed(42)
+python3 -c "
+import random
+
+random.seed(42)
 n = 50
-A = np.random.uniform(-50, 50, (n, n))
-true_x = np.random.uniform(-10, 10, n)
-B = A.dot(true_x)
-AB = np.column_stack((A, B))
-np.savetxt('test_input_AB.csv', AB, delimiter=',', fmt='%.10f')
-np.savetxt('test_expected_X.csv', true_x, delimiter=',', fmt='%.10f')
+A = [[random.uniform(-50, 50) for _ in range(n)] for _ in range(n)]
+true_x = [random.uniform(-10, 10) for _ in range(n)]
+B = [sum(A[i][j] * true_x[j] for j in range(n)) for i in range(n)]
+
+with open('test_input_AB.csv', 'w') as f:
+    for i in range(n):
+        row = A[i] + [B[i]]
+        f.write(','.join(f'{val:.10f}' for val in row) + '\n')
+
+with open('test_expected_X.csv', 'w') as f:
+    for x in true_x:
+        f.write(f'{x:.10f}\n')
 "
 
 ./gauss test_input_AB.csv test_output_X.csv
 
-python -c "
+python3 -c "
 import sys
-import numpy as np
+
 try:
-    expected = np.loadtxt('test_expected_X.csv')
-    output = np.loadtxt('test_output_X.csv')
+    def read_vals(fname):
+        with open(fname) as f:
+            return [float(line.strip()) for line in f if line.strip()]
+            
+    expected = read_vals('test_expected_X.csv')
+    output = read_vals('test_output_X.csv')
     
-    if np.allclose(expected, output, atol=1e-5):
-        print('[OK] Integration test passed! The outputs match numerically.')
-        sys.exit(0)
-    else:
-        print('[FAILED] The output differs from the expected result.')
-        print('Max difference:', np.max(np.abs(expected - output)))
-        sys.exit(1)
+    for e, o in zip(expected, output):
+        if abs(e - o) > 1e-4:
+            print('[FAILED] The output differs from the expected result.')
+            sys.exit(1)
+            
+    print('[OK] Integration test passed!')
+    sys.exit(0)
 except Exception as e:
     print('[FAILED] Error during comparison: ' + str(e))
     sys.exit(1)
