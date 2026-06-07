@@ -63,7 +63,7 @@ std::vector<uint8_t> decode(std::vector<uint8_t> const &str)
             }
             else
             {
-                val += 84; 
+                val += 84;
             }
         }
 
@@ -76,4 +76,4 @@ std::vector<uint8_t> decode(std::vector<uint8_t> const &str)
     return res;
 }
 
-} 
+}
