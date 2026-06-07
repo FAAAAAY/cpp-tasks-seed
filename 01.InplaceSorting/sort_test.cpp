@@ -11,7 +11,7 @@ TEST(BubbleSort, RandomArray)
 
     bubble_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 4, 5, 8}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 4, 5, 8}));
 }
 
 TEST(BubbleSort, EmptyArray)
@@ -38,7 +38,7 @@ TEST(QuickSort, RandomArray)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 5, 7, 8, 9, 10}));
+    EXPECT_EQ(v, (std::vector<int> {1, 5, 7, 8, 9, 10}));
 }
 
 TEST(QuickSort, Duplicates)
@@ -47,7 +47,7 @@ TEST(QuickSort, Duplicates)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 2, 4, 4}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 2, 4, 4}));
 }
 
 TEST(QuickSort, SortedArray)
@@ -56,5 +56,5 @@ TEST(QuickSort, SortedArray)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 3, 4, 5}));
 }

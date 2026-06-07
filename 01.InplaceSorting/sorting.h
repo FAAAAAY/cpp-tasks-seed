@@ -16,19 +16,25 @@ void bubble_sort(Iterator begin, Iterator end)
 
     bool swapped;
     Iterator last = end;
-    do {
+
+    do
+    {
         swapped = false;
+
         for (Iterator j = begin; std::next(j) != last; ++j)
         {
             Iterator next = std::next(j);
+
             if (*next < *j)
             {
                 std::iter_swap(j, next);
                 swapped = true;
             }
         }
-        last = std::prev(last); 
-    } while (swapped);
+
+        last = std::prev(last);
+    }
+    while (swapped);
 }
 
 // --------------------------- QuickSort (например) ---------------------------------------
@@ -42,6 +48,7 @@ void quick_sort(Iterator begin, Iterator end)
     auto pivot = *pivot_it;
 
     Iterator middle = begin;
+
     for (Iterator it = begin; it != pivot_it; ++it)
     {
         if (*it < pivot)
@@ -50,6 +57,7 @@ void quick_sort(Iterator begin, Iterator end)
             ++middle;
         }
     }
+
     std::iter_swap(middle, pivot_it);
 
     quick_sort(begin, middle);
